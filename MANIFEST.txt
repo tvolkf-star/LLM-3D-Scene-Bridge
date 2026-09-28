@@ -1,0 +1,15 @@
+LICENSE-NOTE.txt
+MANIFEST.txt
+README.md
+RESEARCH_RU.md
+bridge/TASY_MaxBridge_061_PERSONAL.py
+docs/MODELING_METHOD.md
+docs/SETUP.md
+examples/01_stool/GPT_FROSTA_Instant_000027.py
+examples/02_method_transfer_maf/MAF_RibbonSeat_000035.py
+media/GPT_Stool_clean_max.png
+media/MAF_000035_grounded.png
+media/MAF_000035_pair.png
+media/MAF_000035_single.png
+protocol/FILES.md
+protocol/command_examples.json

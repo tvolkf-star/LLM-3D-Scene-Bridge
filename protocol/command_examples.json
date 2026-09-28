@@ -1,0 +1,23 @@
+{
+  "ping": {
+    "id": "000001",
+    "action": "ping"
+  },
+  "execute_python": {
+    "id": "000002",
+    "action": "execute_python",
+    "code": "o=rt.Box(length=500,width=500,height=500); o.name='LLM_Test_Box'"
+  },
+  "library_save": {
+    "id": "000003",
+    "action": "library_save",
+    "name": "hello_max",
+    "code": "o=rt.Sphere(radius=200); o.name='Library_Sphere'"
+  },
+  "library_run": {
+    "id": "000004",
+    "action": "library_run",
+    "name": "hello_max",
+    "params": {}
+  }
+}
