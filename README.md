@@ -1,5 +1,7 @@
 # Direct LLM Modeling in Autodesk 3ds Max
 
+[English research](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md)
+
 **A working experiment in direct 3D modeling from natural-language descriptions using ChatGPT and Autodesk 3ds Max 2024.**
 
 No autonomous agent framework.  
@@ -85,7 +87,8 @@ Or, more simply:
 
 ## Read the research
 
-- [Full research draft — Russian](RESEARCH_RU.md)
+- [Full research — English](RESEARCH_EN.md)
+- [Полный текст исследования — русский](RESEARCH_RU.md)
 - [Setup and reproduction](docs/SETUP.md)
 - [Professional modeling-method transfer](docs/MODELING_METHOD.md)
 - [Transport/file protocol](protocol/FILES.md)
@@ -98,6 +101,14 @@ Or, more simply:
 - `media/` — viewport evidence from the experiment.
 - `docs/` — setup and modeling-method documentation.
 - `protocol/` — transport contract and command examples.
+
+## Scope and related work
+
+This repository does **not** claim to be the first integration between an LLM and Autodesk 3ds Max. Earlier and contemporary projects have connected language models or agent systems to 3ds Max through scripting, plugins, or MCP-style tool layers.
+
+The focus of this experiment is the specific demonstrated combination: a general-purpose ChatGPT model used from its ordinary interface, a deliberately minimal ~8 KB transport bridge, Google Drive as a third-party synchronized transport layer, a closed scene-state/viewport feedback loop, native editable 3ds Max geometry, professional method transfer through dialogue, and executable scene representation.
+
+The repository therefore documents an experiment and its reproducible artifacts rather than a priority claim.
 
 ## Status
 
