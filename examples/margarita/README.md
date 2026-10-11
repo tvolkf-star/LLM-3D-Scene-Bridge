@@ -4,6 +4,10 @@
 
 Four sculptural lounge chairs, each combining original spline rods and oversized rectangular-section spline copies, arranged around a 95 cm table. The concept explores an architectural scene with sculptural seating visually inspired by recycled corrugated cardboard and pizza boxes.
 
+The experiment began with the chair as an object-level modeling task. Its repeated corrugated-cardboard structure, metal support frame and fastening details made it a substantially more demanding test than the earlier control object. A separate image-generation pass was used to visualize the intended recycled-cardboard material and product character; that image is a presentation of the design intent, not a native 3ds Max render.
+
+Once the chair geometry was established, the task expanded to scene-level construction: a table was modeled, four chair instances were arranged into a composition, and the resulting scene remained native and editable in Autodesk 3ds Max 2024.
+
 Technical method: the scene geometry was created and revised in Autodesk 3ds Max 2024 through the LLM-to-3ds-Max connection provided by TASY MaxBridge. This is documented here because direct control of native editable geometry is part of the experiment.
 
 - `MARGARITA_v4_12KB.py`: **11,530 bytes**, reconstructs the complete editable scene from Python text. No `.max` file or MaxBridge is needed to run this standalone example.
