@@ -1,4 +1,8 @@
-# MARGARITA | Architectural Scene Demonstration
+# MARGARITA
+
+## Why MARGARITA?
+
+The original concept imagined the chair as being made from recycled pizza boxes. The name comes from Pizza Margherita: discarded corrugated-cardboard packaging becomes the material idea for a new piece of furniture. **MARGARITA** is the name of the chair and scene, so its spelling is intentionally retained as the project name. | Architectural Scene Demonstration
 
 **Author: Tasy Volkova.**
 
