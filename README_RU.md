@@ -77,7 +77,7 @@
 
 ![Архитектурная визуализация MARGARITA](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
 
-*Генеративная визуализация по сцене из 3ds Max. Не нативный рендер Max.*
+*После создания сцены мы использовали встроенный генератор изображений ChatGPT для создания архитектурной визуализации.*
 
 [Исходные скрипты MARGARITA](examples/margarita/).
 
