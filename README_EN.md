@@ -1,6 +1,6 @@
 # Direct LLM Modeling in Autodesk 3ds Max
 
-**A working experiment in direct modeling inside Autodesk 3ds Max 2024 using general-purpose ChatGPT.**
+**A working experiment in direct modeling inside Autodesk 3ds Max 2024 using a general-purpose LLM.**
 
 [Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русский README](README.md)
 
@@ -15,7 +15,7 @@ Portable bridge, examples, documentation, and images. [Release details](https://
 No autonomous agent framework, specialized 3D model, text-to-3D generator, or custom modeling environment. Google Drive is a third-party synchronized transport layer. A compact Python/pymxs bridge executes operations inside a locally running Autodesk 3ds Max and returns observable results.
 
 ```text
-Task → ChatGPT → Google Drive → local sync
+Task → LLM → Google Drive → local sync
                                   ↓
                           Python/pymxs bridge
                                   ↓
@@ -25,7 +25,7 @@ Task → ChatGPT → Google Drive → local sync
                                   ↓
                      result + scene + viewport
                                   ↓
-                         Google Drive → ChatGPT
+                         Google Drive → LLM
                                        ↺
 ```
 
@@ -109,7 +109,7 @@ The result is an **ultra-compact, LLM-readable way to transfer, reconstruct, and
 1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a writable local folder.
 2. Open **Autodesk 3ds Max 2024 → Scripting → Run Script** and run `TASY_MaxBridge_061_PORTABLE.py`.
 3. Synchronize the working folder using Google Drive for desktop and verify two-way file synchronization.
-4. Give ChatGPT or another capable large language model access to the corresponding Google Drive folder and project documentation.
+4. Give a capable large language model access to the corresponding Google Drive folder and project documentation.
 5. Give the model the MaxBridge documentation and working examples. The bridge is ready for the modeling task; `ping` is a diagnostic action, not a required startup step.
 
 [Detailed installation guide (Russian)](docs/INSTALL_RU.md) · [File protocol](protocol/FILES.md).
@@ -124,6 +124,6 @@ This research does not claim to be the first LLM-to-3ds-Max integration. Neverth
 
 **Important:** The bridge provides access to Autodesk 3ds Max. It does **not** teach a language model how to model. Effective modeling requires geometric reasoning, construction methods, and feedback. Capable language models can adopt existing professional modeling techniques through examples and guided practice.
 
-The repository includes executable examples of native 3ds Max geometry to help a model become familiar with the environment and accelerate this learning process.
+The repository includes executable examples of native 3ds Max geometry that document tested modeling methods and provide reusable context for LLM-driven workflows.
 
 **Author:** Tasy Volkova · [Apache 2.0](LICENSE) · [tasy.pro](https://tasy.pro/)
