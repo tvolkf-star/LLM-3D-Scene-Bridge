@@ -12,7 +12,7 @@ Portable bridge, examples, documentation, and images. [Release details](https://
 
 ## Bridge development
 
-The approximately 8 KB Python/pymxs bridge was **developed as part of this research**, not obtained as an existing integration.then implemented, tested and corrected against a running Autodesk 3ds Max 2024 installation.
+The approximately 8 KB Python/pymxs bridge was **developed as part of this research**, not obtained as an existing integration. It was implemented, tested and corrected against a running Autodesk 3ds Max 2024 installation.
 
 The bridge provides the command-and-feedback channel: it accepts operations, executes them through the native 3ds Max Python/pymxs interface, and reports execution results, scene state and viewport captures. Modeling logic is not embedded in the bridge. The portable 0.6.1 build is a later working iteration of this experimental code.
 
