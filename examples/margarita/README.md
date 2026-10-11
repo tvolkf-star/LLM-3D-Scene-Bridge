@@ -1,8 +1,10 @@
 # MARGARITA | Architectural Scene Demonstration
 
-**Modeled by ChatGPT in Autodesk 3ds Max 2024 via TASY MaxBridge.** Art direction and acceptance: **Tasy Volkova**.
+**Author: Tasy Volkova.**
 
-Four sculptural lounge chairs, each combining original spline rods and oversized rectangular-section spline copies, arranged around a 95 cm table. The accidental overlap of large rectangular sections became the visual idea of the "pizza-box" chairs.
+Four sculptural lounge chairs, each combining original spline rods and oversized rectangular-section spline copies, arranged around a 95 cm table. The concept explores an architectural scene with sculptural seating visually inspired by recycled corrugated cardboard and pizza boxes.
+
+The 3D modeling was performed in Autodesk 3ds Max 2024 by ChatGPT through TASY MaxBridge. This is technically significant to the experiment: the scene geometry was created and revised through the LLM-to-3ds-Max connection rather than modeled manually by the architect.
 
 - `MARGARITA_v4_12KB.py`: **11,530 bytes**, reconstructs the complete editable scene from Python text. No `.max` file or MaxBridge is needed to run this standalone example.
 - `MARGARITA_v4_FULL_SOURCE.py`: commented source of the same example.
@@ -15,4 +17,4 @@ Four sculptural lounge chairs, each combining original spline rods and oversized
 2. Choose **Scripting > Run Script** and select `MARGARITA_v4_12KB.py`.
 3. Inspect the editable objects, and save your own `.max` if desired.
 
-The full source was independently run in 3ds Max and approved by the project art director. The compact script was syntax-checked but not separately tested in Max. Its geometry differs from the earlier exploratory version because the rectangular-section angle is fixed.
+The full source was independently run in 3ds Max and visually verified. The compact script was syntax-checked but not separately tested in Max. Its geometry differs from the earlier exploratory version because the rectangular-section angle is fixed.
