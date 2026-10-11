@@ -69,7 +69,7 @@ The scene was created in Autodesk 3ds Max through the portable bridge. The image
 
 ![MARGARITA architectural visualization](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
 
-*Generative architectural visualization based on the 3ds Max scene; not a native Max render.*
+*After creating the scene, we used ChatGPT’s built-in image generator to produce an architectural visualization.*
 
 [MARGARITA reconstruction scripts](examples/margarita/).
 
