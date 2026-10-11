@@ -87,6 +87,16 @@ The scene was created in Autodesk 3ds Max through the portable bridge. The image
 
 A self-contained Python/pymxs program reconstructed an editable object in a separate clean instance of 3ds Max, without the source scene or bridge. See the [full research](RESEARCH_EN.md) for the experiment and its limitations.
 
+## Scene as executable text
+
+A further finding emerged during the experiments: **an LLM can write a text script that reconstructs the scene's native geometry in Autodesk 3ds Max 2024**. The script was tested on another computer with 3ds Max 2024 installed, where it reproduced the scene's geometry exactly.
+
+For the tested scene of **four chairs and one table, the reconstruction script occupies just 14 KB**. Rather than transferring a conventional binary `.max` file, the geometry can be transferred as executable text and rebuilt in the target application.
+
+This also makes the scene representation accessible to other language models: they can read the script, inspect its construction logic, and propose or implement changes without parsing a binary 3ds Max scene file. This does not mean that every model will understand or modify it equally well.
+
+The result is a **lightweight, LLM-readable method of scene transfer and reconstruction**, not a claim of a universal new 3D file standard. The verified reproduction target is **Autodesk 3ds Max 2024**; compatibility with other versions or applications has not been established.
+
 ## Installation
 
 1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a writable local folder.
