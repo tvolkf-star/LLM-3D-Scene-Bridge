@@ -97,6 +97,8 @@ Because the representation is text, other language models can read it, examine t
 
 The result is an **ultra-compact, LLM-readable way to transfer, reconstruct, and edit scene geometry**. Exact reproduction has been verified in **Autodesk 3ds Max 2024** on another computer. **Tests with other versions of 3ds Max or other 3D applications have not been conducted.**
 
+**Executable scene examples:** [MARGARITA, full reconstruction script (14,552 bytes)](examples/margarita/MARGARITA_v4_FULL_SOURCE.py) · [MARGARITA, compact script](examples/margarita/MARGARITA_v4_12KB.py) · [Stool](examples/stools/GPT_FROSTA_Instant_000027.py) · [Pergola](examples/pergola/MAF035_Pergola.py). These are readable Python/pymxs source files; open them to inspect the modeling operations or run them in a suitable 3ds Max environment. The full MARGARITA source notes that its oversized shell reconstruction still requires visual comparison.
+
 ## Installation
 
 1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a writable local folder.
