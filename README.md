@@ -37,6 +37,8 @@ Task → ChatGPT → Google Drive → local sync
                                        ↺
 ```
 
+**IMPORTANT: This is not 3D asset or image generation. It is direct modeling inside Autodesk 3ds Max.** The language model operates the application's native tools to construct actual scene geometry.
+
 **Modeling decisions remain with the general-purpose LLM. Geometry remains native and editable inside 3ds Max.** No manual code copy-paste is required during the connected modeling loop.
 
 ## Experimental results
