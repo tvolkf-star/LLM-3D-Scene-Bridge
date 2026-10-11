@@ -22,7 +22,7 @@ That question is no longer particularly interesting.
 
 The question was:
 
-**“Can a general-purpose language model work directly as a modeler inside a professional 3D environment?”**
+**“Can a general-purpose language model directly control native modeling operations in a professional 3D environment, receive scene feedback, and iteratively modify the result?”**
 
 ---
 
@@ -159,7 +159,7 @@ The bridge itself is also reproducible: its source code requires neither a speci
 
 The experiment showed that a general-purpose language model can be incorporated directly into a professional 3D-modeling loop.
 
-In the implemented system, **ChatGPT does not merely advise the modeler or output code for the user to execute manually. It performs the modeling role itself**: it receives a task in natural language, forms a construction method, controls 3ds Max, and receives the result of its work back.
+In the implemented system, **the language model is connected directly to the modeling loop rather than supplying code for manual transfer by the user**: it receives a task in natural language, forms a construction method, controls 3ds Max through the bridge, and receives the resulting scene state and viewport feedback.
 
 At the same time, 3ds Max remains 3ds Max.
 
