@@ -4,7 +4,7 @@
 
 Four sculptural lounge chairs, each combining original spline rods and oversized rectangular-section spline copies, arranged around a 95 cm table. The concept explores an architectural scene with sculptural seating visually inspired by recycled corrugated cardboard and pizza boxes.
 
-The 3D modeling was performed in Autodesk 3ds Max 2024 by ChatGPT through TASY MaxBridge. This is technically significant to the experiment: the scene geometry was created and revised through the LLM-to-3ds-Max connection rather than modeled manually by the architect.
+Technical method: the scene geometry was created and revised in Autodesk 3ds Max 2024 through the LLM-to-3ds-Max connection provided by TASY MaxBridge. This is documented here because direct control of native editable geometry is part of the experiment.
 
 - `MARGARITA_v4_12KB.py`: **11,530 bytes**, reconstructs the complete editable scene from Python text. No `.max` file or MaxBridge is needed to run this standalone example.
 - `MARGARITA_v4_FULL_SOURCE.py`: commented source of the same example.
