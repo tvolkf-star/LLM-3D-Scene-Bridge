@@ -89,13 +89,13 @@ A self-contained Python/pymxs program reconstructed an editable object in a sepa
 
 ## Scene as executable text
 
-A further finding emerged during the experiments: **an LLM can write a text script that reconstructs the scene's native geometry in Autodesk 3ds Max 2024**. The script was tested on another computer with 3ds Max 2024 installed, where it reproduced the scene's geometry exactly.
+A further finding emerged during the experiments: **an LLM can express a 3D scene as an executable text script**, which reproduces the scene's native geometry on another computer running Autodesk 3ds Max. This was tested successfully with **3ds Max 2024**: the geometry was reproduced exactly.
 
-For the tested scene of **four chairs and one table, the reconstruction script occupies just 14 KB**. Rather than transferring a conventional binary `.max` file, the geometry can be transferred as executable text and rebuilt in the target application.
+For the tested scene of **four chairs and one table, the complete reconstruction script is only 14 KB**. This is an **ultra-compact textual representation of the scene**, not a simplified or reduced version of its geometry. Executing the script reconstructs the native, editable scene in 3ds Max.
 
-This also makes the scene representation accessible to other language models: they can read the script, inspect its construction logic, and propose or implement changes without parsing a binary 3ds Max scene file. This does not mean that every model will understand or modify it equally well.
+Because the representation is text, other language models can read it, examine the modeling logic, and modify the scene by editing the script, without having to parse a binary `.max` file. How effectively a particular model performs these tasks depends on its capabilities.
 
-The result is a **lightweight, LLM-readable method of scene transfer and reconstruction**, not a claim of a universal new 3D file standard. The verified reproduction target is **Autodesk 3ds Max 2024**; compatibility with other versions or applications has not been established.
+The result is an **ultra-compact, LLM-readable way to transfer, reconstruct, and edit scene geometry**. Exact reproduction has been verified in **Autodesk 3ds Max 2024** on another computer. **Tests with other versions of 3ds Max or other 3D applications have not been conducted.**
 
 ## Installation
 
