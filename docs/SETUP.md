@@ -1,4 +1,6 @@
-# Setup — 3ds Max 2024
+# Legacy PERSONAL setup — 3ds Max 2024
+
+This document describes the earlier fixed-path PERSONAL bridge kept for reproducibility. **New installations should use the portable build and [INSTALL_RU.md](INSTALL_RU.md).**
 
 ## Requirements
 
