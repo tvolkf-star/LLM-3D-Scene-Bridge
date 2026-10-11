@@ -67,6 +67,10 @@ The next stage moved from isolated objects to a more complex designed object and
 
 **Object.** First, the MARGARITA chair was developed as a substantially more demanding modeling task: a repeated corrugated-cardboard structure, metal support frame and fastening details. A separate image-generation pass was used to visualize the intended recycled-cardboard material and product character. That image is a presentation of the design intent, not a native 3ds Max render.
 
+![MARGARITA recycled corrugated-cardboard chair concept](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_chair_concept.jpg)
+
+*MARGARITA chair visualization: intended material and product character. Generated from the developed object for presentation; not a native 3ds Max render.*
+
 **Scene.** With the chair geometry established, the experiment moved from object modeling to scene construction. Through TASY MaxBridge, the LLM created the table, instantiated and arranged four chairs, and assembled the composition as native editable geometry in Autodesk 3ds Max 2024.
 
 ![MARGARITA viewport in Autodesk 3ds Max](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_viewport.png)
