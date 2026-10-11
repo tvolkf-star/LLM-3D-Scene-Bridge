@@ -100,7 +100,7 @@ The result is an **ultra-compact, LLM-readable way to transfer, reconstruct, and
 2. Open **Autodesk 3ds Max 2024 → Scripting → Run Script** and run `TASY_MaxBridge_061_PORTABLE.py`.
 3. Synchronize the working folder using Google Drive for desktop and verify two-way file synchronization.
 4. Give ChatGPT or another capable large language model access to the corresponding Google Drive folder and project documentation.
-5. Send a `ping` command with a unique `id`; check the matching `result.json` before modeling.
+5. Give the model the MaxBridge documentation and working examples. The bridge is ready for the modeling task; `ping` is a diagnostic action, not a required startup step.
 
 [Detailed installation guide (Russian)](docs/INSTALL_RU.md) · [File protocol](protocol/FILES.md).
 
