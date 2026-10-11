@@ -99,6 +99,9 @@
 
 **Готовые текстовые сцены:** [MARGARITA, полный скрипт восстановления (14 552 байта)](examples/margarita/MARGARITA_v4_FULL_SOURCE.py) · [MARGARITA, компактная версия](examples/margarita/MARGARITA_v4_12KB.py) · [Табуретка](examples/stools/GPT_FROSTA_Instant_000027.py) · [Пергола](examples/pergola/MAF035_Pergola.py). Это открытые исходные файлы Python/pymxs: можно изучить построение геометрии и выполнить скрипты в соответствующей среде 3ds Max. В полном скрипте MARGARITA отдельно отмечено, что реконструкция увеличенных оболочек кресел ещё требует визуального сравнения.
 
+
+**Как воспроизвести сцену:** откройте Autodesk 3ds Max 2024, выберите **Scripting → Run Script**, укажите скачанный файл сцены `.py` и запустите его. Перед запуском сохраните текущую сцену: некоторые примеры удаляют или перестраивают объекты.
+
 ## Установка: 5 шагов
 
 1. [Скачайте ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) и распакуйте его в локальную папку с правами записи.
