@@ -90,7 +90,7 @@
 1. [Скачайте ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) и распакуйте его в локальную папку с правами записи.
 2. Откройте **Autodesk 3ds Max 2024 → Scripting → Run Script** и запустите `TASY_MaxBridge_061_PORTABLE.py`.
 3. Синхронизируйте рабочую папку с Google Drive для компьютера; проверьте двусторонний обмен.
-4. Предоставьте ChatGPT доступ к соответствующей папке Google Drive и документации проекта.
+4. Предоставьте ChatGPT или другой мощной языковой модели доступ к соответствующей папке Google Drive и документации проекта.
 5. Отправьте команду `ping` с уникальным `id` и проверьте ответ `result.json`. Затем можно переходить к моделированию.
 
 [Подробная инструкция на русском](docs/INSTALL_RU.md) · [Краткая инструкция на английском](README_EN.md#installation) · [Файловый протокол](protocol/FILES.md).
