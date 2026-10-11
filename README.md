@@ -90,7 +90,7 @@ A self-contained Python/pymxs program reconstructed an editable object in a sepa
 1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a writable local folder.
 2. Open **Autodesk 3ds Max 2024 → Scripting → Run Script** and run `TASY_MaxBridge_061_PORTABLE.py`.
 3. Synchronize the working folder using Google Drive for desktop and verify two-way file synchronization.
-4. Give ChatGPT access to the corresponding Google Drive folder and project documentation.
+4. Give ChatGPT or another capable large language model access to the corresponding Google Drive folder and project documentation.
 5. Send a `ping` command with a unique `id`; check the matching `result.json` before modeling.
 
 [Detailed installation guide (Russian)](docs/INSTALL_RU.md) · [File protocol](protocol/FILES.md).
