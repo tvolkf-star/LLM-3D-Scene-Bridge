@@ -1,1 +1,1 @@
-No license has been selected yet. All rights remain with the respective authors until a license is explicitly added.
+This repository is licensed under the Apache License, Version 2.0. See LICENSE and NOTICE.
