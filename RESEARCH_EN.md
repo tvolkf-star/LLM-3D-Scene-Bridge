@@ -2,33 +2,33 @@
 
 [Русская версия](RESEARCH_RU.md) · [Repository overview](README.md)
 
+**Project author: Tasy Volkova**
+
 ## 1. Background
 
-Modern language models can work confidently with program code, analyze images, and solve tasks that require sequential decision-making. At the same time, professional 3D modeling systems already provide full programmatic interfaces for scene control.
+Modern language models can generate and analyze program code, work with visual information, and execute sequences of related operations. Professional 3D modeling systems, in turn, provide programmatic interfaces for direct control of scenes and geometry.
 
-This raises a fairly simple question: **is a specialized AI system for modeling necessary, or is it enough to give a general-purpose language model a direct control channel to an existing professional tool?**
+This makes it possible to ask a practical question: **does work in a professional 3D environment require a specialized AI system, or is it sufficient to give a general-purpose language model a direct control channel to an existing professional tool?**
 
-The experiment used **Autodesk 3ds Max 2024** as the working environment and **ChatGPT GPT-5.6 Sol in Instant mode** as the controlling model.
+The experiment used **Autodesk 3ds Max 2024** and **ChatGPT GPT-5.6 Sol in Instant mode**. Work was performed through the ordinary ChatGPT user interface, without a separate API workflow, autonomous agent framework, specialized text-to-3D model, or custom geometry editor.
 
-A key condition was to preserve the standard modeling environment. The experiment did not involve creating a separate 3D editor, a specialized generative model, or replacing geometry with an image. The result had to be ordinary native 3ds Max objects that remained available for further editing with the standard tools of the application.
+A key condition was to preserve the standard modeling environment. Operations had to produce ordinary native 3ds Max objects that remained editable with the application's standard tools.
 
-Interaction also had to take place through the ordinary ChatGPT user interface. The user describes a task in natural language; the subsequent technical cycle of transmitting and executing commands takes place without manually copying generated code into 3ds Max.
+The research question was not:
 
-In other words, the research question was not:
-
-**“Can AI write a script for 3ds Max?”**
-
-That question is no longer particularly interesting.
+**“Can an LLM write a script for 3ds Max?”**
 
 The question was:
 
-**“Can a general-purpose language model directly control native modeling operations in a professional 3D environment, receive scene feedback, and iteratively modify the result?”**
+**“Can a general-purpose language model directly control native modeling operations in a professional 3D environment, receive feedback from the scene, and iteratively modify the result?”**
+
+A second question emerged during the work: **can the resulting scene exist not only as a binary scene file, but also as an executable textual representation accessible to both 3ds Max and a language model?**
 
 ---
 
-## 2. Subject of the experiment
+## 2. Experimental system
 
-For the experiment, ChatGPT proposed the architecture of a bidirectional software bridge between its interface and a locally running Autodesk 3ds Max.
+As part of the research, a minimal bidirectional software bridge was developed between the ChatGPT interface and a locally running Autodesk 3ds Max 2024.
 
 Data transfer was organized through a synchronized Google Drive directory:
 
@@ -36,122 +36,167 @@ Data transfer was organized through a synchronized Google Drive directory:
 
 The return channel was:
 
-**3ds Max → scene state + execution result + viewport image → Google Drive → ChatGPT**
+**3ds Max → execution result + scene state + viewport image → Google Drive → ChatGPT**
 
-Google Drive does not participate in modeling and contains no special modeling logic. It acts as a transport layer between the remote language-model interface and the local professional application.
+Google Drive acts only as a transport layer. It does not participate in modeling and contains no special geometric logic.
 
-The bridge itself is deliberately minimal.
+The bridge is deliberately minimal as well. It is approximately 8 KB of Python/pymxs code. It contains no library of predefined high-level commands such as “create a house”, “create a chair”, or “build a facade”. The bridge receives operations produced by the LLM, executes them through the native 3ds Max Python/pymxs interface, and returns observable results.
 
-It does not model on behalf of ChatGPT and contains no library of predefined high-level commands such as “create a house”, “create a chair”, or “build a facade”. Its task is to provide access to Python/pymxs, execute the operation formed by the model, and return the actual state of the environment.
+The modeling logic is therefore not hidden inside the bridge. **The LLM forms operations; 3ds Max creates and stores the geometry; the bridge provides the bidirectional channel between them.**
 
-Thus, **the intelligence of the system remains on the general-purpose LLM side, while the geometry remains on the 3ds Max side.**
+![Experimental loop](media/architecture.png)
 
-The bridge connects them.
+The working loop was:
+
+**task → modeling operations → execution in 3ds Max → scene state and viewport → professional evaluation → next local task.**
+
+The last step matters. The experiment did not show that the LLM autonomously and reliably maintains the entire project and its context. Project context, evaluation criteria, and the direction of the next iteration remain with the human. The model solves the next modeling problem within that loop.
 
 ---
 
-## 3. Course of the experiment
+## 3. From the first object to native modeling
 
-After the bridge was launched, the user assigned tasks directly in the ChatGPT window using ordinary text.
+Initial tests used simple geometry to verify the bidirectional loop. Task complexity was then increased progressively.
 
-ChatGPT independently formed the program for constructing an object; transmitted it through the bridge; initiated execution in 3ds Max; created native scene objects; received information about the result; analyzed errors; and changed its construction method in subsequent iterations.
+One early architectural test was a shopping-center scene generated from a textual description and consisting of **69 separate native 3ds Max objects**. The geometry was created directly inside the professional environment and remained available for standard editing.
 
-The first experiments used elementary geometry, after which the complexity of the task was increased.
+The first controlled object-modeling test used an IKEA FROSTA stool as a constructive reference. The stool was not intended as a design showcase. Its purpose was to test the complete loop: construct an object, inspect the actual result in Max, receive professional correction of the method, and rebuild the geometry.
 
-From a textual architectural description, ChatGPT constructed a shopping-center scene consisting of **69 separate native 3ds Max objects**. The geometry was created directly inside the professional environment and remained available for standard editing.
+![GPT Stool No. 1 in Autodesk 3ds Max](media/GPT_Stool_clean_max.png)
 
-The next experiment focused on object modeling.
+*Native editable geometry in Autodesk 3ds Max.*
 
-An IKEA FROSTA stool was used as the initial constructive reference. During modeling, ChatGPT proposed its own geometry for the bent supports — thinner and more plastic than the original reference. The resulting form was evaluated by the architect and deliberately retained as an independent design variant.
+During modeling, an independent variant of the bent support geometry emerged. The architect evaluated the result and deliberately retained it as a separate design variant named **GPT Stool No. 1**.
 
-This became **GPT Stool No. 1**.
-
-The experiment was important not only because of the result, but because of the process. After professional correction of the construction method, ChatGPT moved from direct polygonal construction to a method appropriate to this task:
+The significant result was not only the object but the change in working method. After professional correction, the LLM moved from direct polygon construction to a method more appropriate to the task:
 
 **SplineShape → rectangular section → Editable Poly → relative instance transformations.**
 
-In other words, the collaborative work did not manually correct the model itself; it corrected **the modeling method used by the language model**.
+In other words, the finished model was not manually repaired. What was corrected was **the modeling method used by the LLM to solve the task**.
 
-ChatGPT then independently reproduced the object using 3ds Max.
+[Python/pymxs source](examples/01_stool/GPT_FROSTA_Instant_000027.py)
 
 ---
 
 ## 4. Transfer of a professional modeling method
 
-The next stage tested whether a language model could learn not a specific object to copy, but the logic of a professional modeling method and apply it to a new task.
+The next stage tested a more demanding hypothesis: can a language model adopt not the coordinates of a particular object, but the principle of a professional modeling method and apply it to a new geometric task?
 
-The architect demonstrated a principle used in professional practice for constructing repeated spatial systems through paths, animation, and Snapshot in Autodesk 3ds Max. A single source profile or object is given a rule that changes its position, shape, scale, section, or other parameters; a sequence of its states is materialized as geometry; the result is then cleaned of construction objects and consolidated into ordinary editable scene geometry.
+The architect demonstrated a working principle used for repeated spatial systems: a source profile or object moves along a path while its parameters change, and a sequence of states is materialized as geometry. In 3ds Max, such a workflow can be implemented, among other ways, with Path Constraint, Animation, and Snapshot.
 
-The examples were not supplied as objects to reproduce. They demonstrated the logic and the range of applications of the method: small architectural forms, lamellar systems, walls, canopies, and facade elements.
+The examples explained the **principle** rather than supplying geometry to copy.
 
-After the explanation, ChatGPT received a new task and independently applied the learned principle while modeling an elongated small architectural form with an integrated seat and canopy.
+The LLM then received a new task: an elongated small architectural form with an integrated seat and canopy. The model did not literally reproduce the demonstrated Path Constraint + Animation + Snapshot sequence. Instead, it transferred the principle of a changing profile and sampled states into a procedural construction of the new form.
 
-The first iterations revealed errors in form and ergonomics. Professional feedback did not consist of manually positioning individual elements; it addressed the construction logic itself — the profile, the character of transitions, lamella section, and organization of the modeling workflow. Subsequent iterations produced a substantial change in the result.
+![Single MAF module](media/MAF_000035_single.png)
 
-The resulting form was then duplicated, rotated, and tested as a spatial module on a scene plane. The module retained compositional integrity and remained suitable for further work in the standard 3ds Max environment.
+*First spatial form.*
 
-Thus, the experiment demonstrated transfer from a human professional to a language model of **not only an example object, but a professional modeling method**, which the model then applied to a new geometric task.
+![Paired MAF modules](media/MAF_000035_pair.png)
 
----
+*Testing the form as a paired composition.*
 
-## 5. Additional investigation: scene reproducibility
+![Grounded MAF composition](media/MAF_000035_grounded.png)
 
-The result raised another question.
+*Further test of spatial organization.*
 
-If ChatGPT can describe its own scene-construction process using Python/pymxs, must the result of modeling necessarily exist only as a traditional scene file?
+The first iterations revealed errors in form and ergonomics. Professional feedback addressed the profile, transitions, lamella section, and construction method. After the method was corrected, subsequent iterations produced a substantially different result.
 
-ChatGPT converted the created object into an autonomous Python script containing the procedure for constructing it.
+This stage supports a narrower and more testable conclusion than “teaching a model to model in general”: **a professional construction principle was explained by a human, interpreted by the LLM, and applied to a new task through a different procedural implementation.**
 
-The script contained the seat geometry, the geometry and trajectory of the support, section parameters, dimensions, spatial placement of elements, copying, and transformations.
-
-Thus, the file preserved more than the final set of geometric data.
-
-**It preserved the method by which the scene was produced.**
+[Source example](examples/02_method_transfer_maf/MAF_RibbonSeat_000035.py) · [Modeling method](docs/MODELING_METHOD.md)
 
 ---
 
-## 6. Course of the additional investigation
+## 5. From an individual object to a scene: MARGARITA
 
-A separate instance of Autodesk 3ds Max was launched to test reproducibility.
+The next stage increased not only geometric complexity but also the scale of the task.
 
-It:
+### Object
 
-- was not connected to the developed bridge;
-- did not contain the original scene;
-- had not participated in the modeling process.
+The **MARGARITA** chair was developed as a more demanding object with a repeated corrugated-cardboard structure, a metal support frame, and fastening details.
 
-Only the autonomous Python/pymxs script for **GPT Stool No. 1** was passed to it.
+Its name came from the initial idea of using recycled pizza boxes: corrugated cardboard → pizza boxes → Margherita → **MARGARITA**.
 
-After execution, the object was rebuilt in the independent environment.
+![MARGARITA chair concept](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_chair_concept.jpg)
 
-Its geometric structure, dimensions, element positions, and constructive organization were reproduced. The result was again ordinary editable Autodesk 3ds Max objects.
+*Visualization of the intended material and product character. This is a separate image-generation visualization, not a native 3ds Max render.*
 
-The original scene therefore ceased to be a necessary carrier of the object.
+### Scene
 
-To restore it, an **executable description of the construction procedure** was sufficient.
+Once the chair geometry had been developed, the task was expanded into a scene composition. Through the bridge, the LLM created a table, placed four chairs, and assembled the composition in Autodesk 3ds Max 2024.
+
+![MARGARITA viewport in Autodesk 3ds Max](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_viewport.png)
+
+*Actual Autodesk 3ds Max 2024 viewport. The geometry is native and editable.*
+
+After the scene geometry was completed, it was used as the basis for a separate architectural visualization produced with image generation.
+
+![MARGARITA architectural visualization](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
+
+*Presentation outcome based on the completed scene. It is not evidence of native 3ds Max rendering.*
+
+This stage matters because it moves the experiment **from an individual model to a scene** containing multiple related objects, instances, constructive details, and compositional relationships.
 
 ---
 
-## 7. Evidence
+## 6. Executable scene representation
 
-The result is reproducible and can be presented directly, without requiring the reader to trust the description of the experiment.
+Working through Python/pymxs raised an additional question.
 
-The demonstration materials include:
+If the construction of native geometry can be expressed as a sequence of executable operations, must the binary .max file remain the only carrier of the result?
 
-- source code of the ChatGPT ↔ 3ds Max software bridge;
-- data-exchange scheme;
-- commands formed by ChatGPT;
-- machine-readable scene-state snapshots;
-- viewport images obtained during modeling;
-- the native 3ds Max scene;
-- the autonomous Python/pymxs script for GPT Stool No. 1;
-- the result of executing that script in an independent instance of 3ds Max.
+Autonomous Python/pymxs representations of the created geometry were prepared to test this.
 
-The key reproducibility test is therefore extremely simple:
+The principle was first tested with GPT Stool No. 1. Its script was run in a separate Autodesk 3ds Max instance that was not connected to the bridge, did not contain the source scene, and had not participated in the modeling process. Execution rebuilt the object as ordinary editable geometry.
 
-**empty 3ds Max + one Python file → restored editable scene.**
+The same principle was then applied to the substantially more complex MARGARITA scene.
 
-The bridge itself is also reproducible: its source code requires neither a specialized machine-learning model nor a separate generative 3D engine.
+The full reconstruction source is **14,552 bytes**. The repository also contains a compact **11,530-byte** version.
+
+[MARGARITA full source](examples/margarita/MARGARITA_v4_FULL_SOURCE.py) · [Compact version](examples/margarita/MARGARITA_v4_12KB.py)
+
+The full version was run separately and visually verified in Autodesk 3ds Max 2024. The compact version was syntax-checked, but is not claimed here as a separately verified complete reconstruction.
+
+Two claims must be kept distinct.
+
+The experiment **does not mean that a binary .max file is “compressed into 14 KB of text.”** The executable representation is not a serialization of every internal datum in a 3ds Max file.
+
+The verified result is different: **a native geometric scene can be reconstructed from a compact textual description of the procedure used to build it.**
+
+Such text can simultaneously be:
+
+- executed by a professional DCC system;
+- read by a human;
+- analyzed programmatically;
+- read by an LLM as ordinary source code;
+- modified and executed again to produce new native geometry.
+
+This is what makes the executable representation interesting as an additional means of transferring and continuing work on a scene.
+
+---
+
+## 7. Reproducibility and evidence
+
+The research is built around observable results rather than requiring trust in a description of the process.
+
+The repository contains:
+
+- source code of the bidirectional bridge;
+- the exchange protocol;
+- executable Python/pymxs examples;
+- intermediate and final viewport images;
+- examples of native geometry;
+- materials from the professional-method-transfer experiment;
+- the full executable representation of the MARGARITA scene;
+- the compact version of that representation;
+- images that distinguish actual 3ds Max geometry from subsequent presentation-oriented image generation.
+
+The minimal executable-representation test remains simple:
+
+**empty Autodesk 3ds Max 2024 + Python/pymxs file → reconstructed editable geometry.**
+
+For MARGARITA, the full reconstruction source was tested separately. Compatibility with other versions of 3ds Max or with other DCC applications was not tested in this research.
 
 ---
 
@@ -159,32 +204,22 @@ The bridge itself is also reproducible: its source code requires neither a speci
 
 The experiment showed that a general-purpose language model can be incorporated directly into a professional 3D-modeling loop.
 
-In the implemented system, **the language model is connected directly to the modeling loop rather than supplying code for manual transfer by the user**: it receives a task in natural language, forms a construction method, controls 3ds Max through the bridge, and receives the resulting scene state and viewport feedback.
+In the implemented system, the LLM is not limited to supplying code for manual transfer by the user. It receives a task in natural language, forms construction operations, transmits them through a minimal bridge to 3ds Max, receives the actual scene state and viewport, and uses that feedback in the next iteration.
 
-At the same time, 3ds Max remains 3ds Max.
+At the same time, **3ds Max remains 3ds Max**. No intermediate “AI geometry” is created that later requires conversion. The result consists of standard editable objects in a professional DCC system.
 
-No intermediate “AI geometry” is created that must later be converted into a professional format. The result is immediately composed of standard objects in a professional DCC system.
+The experiment also demonstrated transfer of a professional modeling principle. The human explained a method for solving a class of tasks rather than supplying finished geometry to copy. The LLM interpreted that principle and applied it to a new form, without necessarily using the same literal sequence of commands.
 
-The subsequent experiment also tested transfer of a professional modeling method: the architect explained the logic of a working method rather than supplying finished geometry to copy. After several iterations and professional feedback, ChatGPT applied the principle to a new task and created an independent spatial form.
+The progression from a simple object to MARGARITA and then to a composition of multiple objects showed that the same loop can be applied to increasingly complex tasks. It also exposed an important boundary: **the human more reliably maintains project context and evaluation criteria; the LLM is effective as a modeler solving the next local task within that context.**
 
-But the most interesting result emerged as a secondary consequence of the original experiment.
+A further result was the executable textual representation of a scene.
 
-The created scene proved representable as **executable source code**.
+It does not replace .max as a universal container for all Autodesk 3ds Max data, nor is it a textual copy of the binary file. Its role is different: **to describe a sufficient sequence of operations to reconstruct the tested native geometry.**
 
-Such a representation has properties of both a traditional scene and a program: it stores geometric construction, parameters, and relationships between objects; it can reconstruct the scene by itself; and it remains a textual programmatic description of how that scene is built.
+Text therefore performs two functions in the experimental system.
 
-In our experiment it has already demonstrated the essential property of an exchange representation:
+**In one direction, text is the language used to control the modeling process: the LLM forms operations that are executed in 3ds Max.**
 
-**the same scene was reproduced in an independent environment from the transferred representation.**
+**In the other direction, the geometric construction of the scene can be expressed as executable text that an LLM can read, analyze, and modify, and that 3ds Max can turn back into native geometry.**
 
-The carrier is Python — a language suitable both for machine execution and for programmatic analysis and transformation, including by systems that work with source code.
-
-This changes the framing of the original problem in an interesting way.
-
-We began by trying to give ChatGPT hands inside 3ds Max.
-
-The result was a working bidirectional interface between a general-purpose LLM and a professional DCC system; independent creation of native geometry by the model; transfer of a professional modeling method from an architect to the language model; and independent reconstruction of the created scene from an executable description.
-
-**And then we found that what can be transferred is no longer limited to the model’s commands.**
-
-**The scene itself can be transferred as a program.**
+The bidirectional interface therefore connects not only a language model and a modeling application. It connects two representations of the same process: **a native editable 3D scene and its executable textual description.**
