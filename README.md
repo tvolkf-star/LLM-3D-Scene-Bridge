@@ -41,7 +41,7 @@ Check the geometry **in Max**, not just the response code. For complete installa
 ## Learn to model: training examples
 
 - [Stools](examples/stools/): basic dimensions, geometry, construction and grouping.
-- [Pergola](examples/pergola/): planned architectural exercise in repeated elements and assembly; verified source pending.
+- [Pergola](examples/pergola/): original command `000035`, with 73 parametric spline profiles and an editable polygon structure. **Warning: this example resets the current scene without prompting to save.**
 - [Margarita](examples/margarita/): spline cross-sections, iterative scene building and artistic use of unexpected geometry. The **entire reproducible scene fits into 11,530 bytes of Python text**, without transferring a native `.max` file.
 
 The original live modeling loop required MaxBridge. The final standalone Margarita script is a separate portability demonstration and **runs without the bridge**.
