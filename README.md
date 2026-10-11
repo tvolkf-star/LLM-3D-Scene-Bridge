@@ -1,147 +1,98 @@
-# LLM–3D Scene Bridge / TASY MaxBridge
+# Direct LLM Modeling in Autodesk 3ds Max
 
-**A working experiment in direct 3D modeling from natural-language descriptions using ChatGPT and Autodesk 3ds Max 2024.**
+**Рабочее исследование прямого моделирования в Autodesk 3ds Max 2024 посредством универсальной языковой модели ChatGPT.**
 
-**[⬇ СКАЧАТЬ ПОЛНЫЙ КОМПЛЕКТ / DOWNLOAD COMPLETE RELEASE ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip)**
+[Исследование на русском](RESEARCH_RU.md) · [English research](RESEARCH_EN.md) · [English README](README_EN.md)
 
-**В архиве:** портативный мост 0.6.1, README, русская инструкция установки, примеры моделирования (табуретки, пергола, «Маргарита»), исходные команды, изображения, лицензия и учебная документация.
+## Скачать
 
-**[▶ НАЧАТЬ ЗДЕСЬ: запуск моста, просмотр изображений и запуск примеров](START_HERE_RU.md)**
+**[⬇ СКАЧАТЬ ВСЁ / DOWNLOAD ALL — TASY MaxBridge 0.6.1 PORTABLE](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip)**
 
-[Русская инструкция по установке](docs/INSTALL_RU.md) · [Полный текст исследования](RESEARCH_RU.md) · [English README](README_EN.md) · [Все файлы релиза](../../releases/tag/v0.6.1-portable)
+Портативный мост, примеры, документация и изображения. [Страница релиза](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/tag/v0.6.1-portable).
 
-## Что исследуем
+## Архитектура
 
-Можно ли дать универсальной языковой модели возможность **не только писать код для 3ds Max, но и непосредственно моделировать в работающей программе**, получать состояние сцены и изображение viewport, анализировать результат и выполнять следующую итерацию?
-
-Здесь исследуется реальный замкнутый процесс **ChatGPT → 3ds Max → обратная связь → ChatGPT**, а не генерация иллюстраций по тексту.
-
-![Рендер сцены с Маргаритой](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
-
-**Рендер сцены Джипити.** Генеративная архитектурная визуализация, выполненная на основе реального viewport созданной в 3ds Max сцены. Это не штатный рендер 3ds Max.
-
-![Сцена Маргарита в Autodesk 3ds Max](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_viewport.png)
-
-**Сцена, смоделированная Джипити при помощи моста.** Реальная редактируемая геометрия в Autodesk 3ds Max 2024.
-
----
-
-No autonomous agent framework.  
-No specialized 3D model.  
-No text-to-3D generator.  
-No custom modeling environment.  
-No manual copy-paste of generated code into 3ds Max during the working loop.
-
-The system connects ChatGPT to a locally running Autodesk 3ds Max through **Google Drive as a third-party synchronized transport layer** and an approximately **8 KB Python/pymxs bridge**.
-
-## Closed modeling loop
+Нет специализированной 3D-модели, text-to-3D-генератора, автономной агентной системы или собственного редактора геометрии. Модель работает через обычный интерфейс ChatGPT. Google Drive служит сторонним синхронизируемым транспортом, а компактный Python/pymxs-мост выполняет команды в локальном Autodesk 3ds Max и возвращает результат.
 
 ```text
-Natural-language task
-        ↓
-     ChatGPT
-        ↓
-   Google Drive
-        ↓ local sync
-~8 KB Python/pymxs bridge
-        ↓
-Autodesk 3ds Max 2024
-        ↓
-native editable geometry
-        ↓
-result + scene state + viewport
-        ↓
-   Google Drive
-        ↓
-     ChatGPT
-        ↺ next iteration
+Задача → ChatGPT → Google Drive → локальная синхронизация
+                                     ↓
+                          Python/pymxs bridge
+                                     ↓
+                            3ds Max 2024
+                                     ↓
+                   редактируемая геометрия
+                                     ↓
+                результат + scene.json + viewport
+                                     ↓
+                         Google Drive → ChatGPT
+                                     ↺
 ```
 
-Google Drive contains no modeling logic. The bridge contains no modeling intelligence and no predefined commands such as “make a chair”, “make a facade”, or “make a building”. It transports executable operations to 3ds Max and returns observable results.
+**Решения о моделировании принимает универсальная LLM. Геометрия создаётся и остаётся редактируемой в 3ds Max.** Во время рабочего цикла ручное копирование команд в Max не требуется.
 
-**The modeling decisions remain on the general-purpose LLM side. The geometry remains on the 3ds Max side.**
+## Экспериментальные результаты
 
-The output is ordinary **native, editable Autodesk 3ds Max geometry**.
+### 01. Контрольный объект: табурет
 
-## Research question
+Проверка нативного построения геометрии, профессиональных коррекций и воспроизведения объекта автономным Python/pymxs-скриптом.
 
-The experiment began as a practical test:
+![Табурет в Autodesk 3ds Max](media/GPT_Stool_clean_max.png)
 
-> **Can a general-purpose language model work directly as a modeler inside a professional 3D environment?**
+*Редактируемый объект в 3ds Max.* [Исходные скрипты](examples/stools/).
 
-It was not a test of whether an LLM can write a 3ds Max script for a human to copy and run. The goal was to close the loop: task → modeling operation → actual scene → viewport → evaluation → next modeling operation.
+### 02. Передача профессионального метода: МАФ / пергола
 
-## What was demonstrated
+Архитектор передал модели метод работы с изменяющимся профилем и последовательностью геометрических состояний. Модель применила метод к новой пространственной конструкции. Это эксперимент по передаче **способа моделирования**, а не копированию заданных координат.
 
-### 01 — Control object: stool
+![Одиночный модуль](media/MAF_000035_single.png)
 
-A simple stool was used as a controlled modeling task. The process included professional correction of the modeling method, creation of native geometry, and export of the construction logic as an autonomous Python/pymxs scene program.
+*Построение одного модуля.*
 
-![Stool reproduced in 3ds Max](media/GPT_Stool_clean_max.png)
+![Парная композиция](media/MAF_000035_pair.png)
 
-[Stool source scripts](examples/stools/)
+*Два модуля в сцене.*
 
-### 02 — Transfer of a professional modeling method
+![Композиция на основании](media/MAF_000035_grounded.png)
 
-The architect then explained a reusable professional technique rather than supplying an object to copy: one source profile/object, a rule of spatial or parametric change, repeated sampled states, and cleanup into usable native geometry.
+*Пространственная композиция в 3ds Max.*
 
-ChatGPT applied the learned logic to a new task: a large slatted urban-furniture / shade-seat module.
+[Скрипт и команда 000035](examples/pergola/) · [Описание метода](docs/MODELING_METHOD.md).
 
-![Independent MAF result](media/MAF_000035_single.png)
+### 03. Новая сцена: MARGARITA
 
-The result was then duplicated, rotated and placed in a larger spatial composition in 3ds Max.
+Сцена создана через портативный MaxBridge в Autodesk 3ds Max. Ниже отдельно показаны **нативная геометрия в viewport** и **генеративная архитектурная визуализация**, полученная на основе этой сцены. Визуализация не является штатным рендером 3ds Max.
 
-![MAF pair](media/MAF_000035_pair.png)
+![Сцена MARGARITA в 3ds Max](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_viewport.png)
 
-![MAF grounded composition](media/MAF_000035_grounded.png)
+*Viewport Autodesk 3ds Max 2024: редактируемая геометрия.*
 
-The intermediate failures are part of the experiment: professional feedback changed the **modeling method**, not merely a list of coordinates.
+![Архитектурная визуализация MARGARITA](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
 
-[Original MAF command 000035 and Python source](examples/pergola/) · [Spline modeling method](docs/MAXBRIDGE_SPLINE_MODELING_RU.md) · [Snapshot method](docs/MAXBRIDGE_SNAPSHOT_MODELING_RU.md)
+*Генеративная визуализация по сцене из 3ds Max. Не нативный рендер Max.*
 
-**Technical distinction:** Command `000035` generates 73 changing spline profiles procedurally. The separately documented Path Constraint → Auto Key → Snapshot workflow is a different technique. **Command `000035` resets the active 3ds Max scene without a save prompt.**
+[Исходные скрипты MARGARITA](examples/margarita/).
 
-### 03 — Executable scene representation
+### 04. Исполняемое представление сцены
 
-The stool experiment produced a second research question: does the scene itself have to be transmitted as a traditional scene file?
+Автономный Python/pymxs-скрипт восстановил редактируемый объект в отдельном экземпляре 3ds Max без исходного файла сцены и без моста. Эксперимент и его ограничения изложены в [полном исследовании](RESEARCH_RU.md).
 
-The modeled object was represented as an autonomous Python/pymxs program. A separate clean instance of 3ds Max, without the bridge and without the source scene, reconstructed the editable object from that program.
+## Установка: 5 шагов
 
-> **An ordinary scene stores a state of the world. An executable scene can store the rules by which that state is produced.**
+1. [Скачайте ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) и распакуйте его в локальную папку с правами записи.
+2. Откройте **Autodesk 3ds Max 2024 → Scripting → Run Script** и запустите `TASY_MaxBridge_061_PORTABLE.py`.
+3. Синхронизируйте рабочую папку с Google Drive для компьютера; проверьте двусторонний обмен.
+4. Предоставьте ChatGPT доступ к соответствующей папке Google Drive и документации проекта.
+5. Отправьте команду `ping` с уникальным `id` и проверьте ответ `result.json`. Затем можно переходить к моделированию.
 
-Or, more simply:
+[Подробная инструкция на русском](docs/INSTALL_RU.md) · [Краткая инструкция на английском](README_EN.md#installation) · [Файловый протокол](protocol/FILES.md).
 
-> **The scene itself can be transmitted as a program.**
+**Безопасность:** `execute_python` исполняет произвольный Python в процессе 3ds Max. Доверяйте только проверенным источникам команд; сохраняйте рабочие сцены перед экспериментами.
 
-[Executable stool scripts](examples/stools/) · [Margarita scene reconstruction scripts](examples/margarita/)
+## Материалы исследования
 
-## Read the research
+[Полный текст на русском](RESEARCH_RU.md) · [Full research in English](RESEARCH_EN.md) · [Портативный мост](TASY_MaxBridge_061_PORTABLE.py) · [Примеры](examples/) · [Документация](docs/).
 
-- [Full research draft — Russian](RESEARCH_RU.md)
-- [Setup and reproduction](docs/SETUP.md)
-- [Professional modeling-method transfer](docs/MODELING_METHOD.md)
-- [Transport/file protocol](protocol/FILES.md)
-- [Detailed Russian installation guide for 0.6.1 PORTABLE](docs/INSTALL_RU.md)
+Работа не претендует на первенство интеграции LLM с 3ds Max. Исследуется конкретная реализованная связка: универсальная модель, минимальный транспортный мост, замкнутый цикл обратной связи, нативная геометрия, передача профессионального метода и исполняемое представление сцены.
 
-## Repository contents
-
-- [`TASY_MaxBridge_061_PORTABLE.py`](TASY_MaxBridge_061_PORTABLE.py) — working portable Python/pymxs bridge for Autodesk 3ds Max 2024.
-- `bridge/` — compact bridge research sources and related files.
-- `examples/01_stool/` — original stool construction research.
-- `examples/02_method_transfer_maf/` — original modeling-method transfer experiment.
-- [`examples/stools/`](examples/stools/) — packaged stool scripts.
-- [`examples/pergola/`](examples/pergola/) — original command `000035` and executable Python.
-- [`examples/margarita/`](examples/margarita/) — reconstructible sculptural scene scripts.
-- `media/` — original viewport evidence from the experiment.
-- `docs/` — setup, installation and modeling-method documentation.
-- `protocol/` — transport contract and command examples.
-
-## Status
-
-This repository documents an ongoing practical experiment. It makes no claim that this is the first LLM-to-3ds-Max integration. The focus is the demonstrated combination of a general-purpose ChatGPT model, a deliberately minimal transport bridge, a third-party synchronized storage layer, native editable 3ds Max geometry, visual/state feedback, professional method transfer, and executable scene representation.
-
-**Verification note:** a successful script execution does not by itself establish the geometric quality of the result. Viewport captures are best-effort and not guaranteed for every command.
-
-**Security:** `execute_python` runs arbitrary Python inside 3ds Max with the process's permissions. Only use trusted commands; save existing scenes before experiments.
-
-**Author:** Tasy Volkova · **License:** [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [CITATION.cff](CITATION.cff) · [tasy.pro](https://tasy.pro/)
+**Автор:** Tasy Volkova · [Apache 2.0](LICENSE) · [tasy.pro](https://tasy.pro/)
