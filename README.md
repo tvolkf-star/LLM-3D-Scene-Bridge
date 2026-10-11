@@ -101,6 +101,10 @@ A self-contained Python/pymxs program reconstructed an editable object in a sepa
 
 [English research](RESEARCH_EN.md) · [Russian research](RESEARCH_RU.md) · [Portable bridge](TASY_MaxBridge_061_PORTABLE.py) · [Examples](examples/) · [Documentation](docs/).
 
-This research does not claim to be the first LLM-to-3ds-Max integration. It documents the tested combination of a general-purpose LLM, minimal bridge, synchronized transport, closed feedback loop, native geometry, professional method transfer, and executable scene representation.
+This research does not claim to be the first LLM-to-3ds-Max integration. Nevertheless, it produced noteworthy practical results using an approximately **8 KB Python/pymxs bridge**, without an autonomous agent framework, specialized 3D model, or additional orchestration libraries. The experiments were conducted with **GPT-5.6 Sol in Instant mode** through the standard ChatGPT interface, without a dedicated API workflow or separate API token budget.
+
+**Important:** The bridge provides access to Autodesk 3ds Max. It does **not** teach a language model how to model. Effective modeling requires geometric reasoning, construction methods, and feedback. Capable language models can adopt existing professional modeling techniques through examples and guided practice.
+
+The repository includes executable examples of native 3ds Max geometry to help a model become familiar with the environment and accelerate this learning process.
 
 **Author:** Tasy Volkova · [Apache 2.0](LICENSE) · [tasy.pro](https://tasy.pro/)
