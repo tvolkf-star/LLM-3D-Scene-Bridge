@@ -1,127 +1,145 @@
 # LLM–3D Scene Bridge / TASY MaxBridge
 
-**Экспериментальный файловый мост между языковой моделью и Autodesk 3ds Max 2024.**
+**A working experiment in direct 3D modeling from natural-language descriptions using ChatGPT and Autodesk 3ds Max 2024.**
 
-**Версия:** 0.6.1 PORTABLE · **Язык управления:** Python / pymxs · **Лицензия:** Apache-2.0
+**[⬇ СКАЧАТЬ ПОЛНЫЙ КОМПЛЕКТ / DOWNLOAD COMPLETE RELEASE ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip)**
 
-[English README](README_EN.md) · [Установка и первый запуск](docs/INSTALL_RU.md) · [Исходный код моста](TASY_MaxBridge_061_PORTABLE.py) · [Релизы и архивы](../../releases)
+**В архиве:** портативный мост 0.6.1, README, русская инструкция установки, примеры моделирования (табуретки, пергола, «Маргарита»), исходные команды, изображения, лицензия и учебная документация.
+
+[Русская инструкция по установке](docs/INSTALL_RU.md) · [Полный текст исследования](RESEARCH_RU.md) · [English README](README_EN.md) · [Все файлы релиза](../../releases/tag/v0.6.1-portable)
 
 ## Что исследуем
 
-Можно ли превратить языковую модель из генератора советов и разрозненных скриптов в участника **замкнутого процесса моделирования** в профессиональном 3D-редакторе?
+Можно ли дать универсальной языковой модели возможность **не только писать код для 3ds Max, но и непосредственно моделировать в работающей программе**, получать состояние сцены и изображение viewport, анализировать результат и выполнять следующую итерацию?
 
-Цель проекта не в том, чтобы получить красивую картинку по текстовому запросу. Цель в другом: дать модели возможность **создавать и изменять реальную геометрию в 3ds Max, получать обратную связь о сцене, проверять результат и продолжать работу**.
+Здесь исследуется реальный замкнутый процесс **ChatGPT → 3ds Max → обратная связь → ChatGPT**, а не генерация иллюстраций по тексту.
 
-В эксперименте архитектор задаёт задачу, геометрическую логику и критерии качества. ChatGPT пишет исполняемые команды для Max. Мост обеспечивает обмен. Принятие результата остаётся за человеком.
+![Рендер сцены с Маргаритой](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_archviz.png)
 
-## Схема рабочего контура
+**Рендер сцены Джипити.** Генеративная архитектурная визуализация, выполненная на основе реального viewport созданной в 3ds Max сцены. Это не штатный рендер 3ds Max.
+
+![Сцена Маргарита в Autodesk 3ds Max](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/margarita_viewport.png)
+
+**Сцена, смоделированная Джипити при помощи моста.** Реальная редактируемая геометрия в Autodesk 3ds Max 2024.
+
+---
+
+No autonomous agent framework.  
+No specialized 3D model.  
+No text-to-3D generator.  
+No custom modeling environment.  
+No manual copy-paste of generated code into 3ds Max during the working loop.
+
+The system connects ChatGPT to a locally running Autodesk 3ds Max through **Google Drive as a third-party synchronized transport layer** and an approximately **8 KB Python/pymxs bridge**.
+
+## Closed modeling loop
 
 ```text
-Архитектор / постановка задачи
-              |
-              v
-       ChatGPT / Python
-              |
-       command.json
-              |
-    синхронизируемая папка
-              |
-              v
-      TASY MaxBridge
-      Autodesk 3ds Max
-              |
-    выполнение Python/pymxs
-              |
-              v
- result.json + scene.json
- + viewport.png (если доступен)
-              |
-              v
-      Анализ и следующая итерация
+Natural-language task
+        ↓
+     ChatGPT
+        ↓
+   Google Drive
+        ↓ local sync
+~8 KB Python/pymxs bridge
+        ↓
+Autodesk 3ds Max 2024
+        ↓
+native editable geometry
+        ↓
+result + scene state + viewport
+        ↓
+   Google Drive
+        ↓
+     ChatGPT
+        ↺ next iteration
 ```
 
-Это **файловый протокол**, а не сетевой сервер и не плагин Google Drive. Google Drive для компьютера может служить транспортом синхронизации, но сам мост не использует Google Drive API. Специальная агентная среда не требуется.
+Google Drive contains no modeling logic. The bridge contains no modeling intelligence and no predefined commands such as “make a chair”, “make a facade”, or “make a building”. It transports executable operations to 3ds Max and returns observable results.
 
-## Что подтверждено, а что пока нет
+**The modeling decisions remain on the general-purpose LLM side. The geometry remains on the 3ds Max side.**
 
-| Проверка | Состояние |
-|---|---|
-| Запуск портативного скрипта в 3ds Max 2024 | Проверено |
-| Работа из отдельной локальной папки без жёсткой привязки к диску | Проверено |
-| Двусторонний обмен через синхронизируемую папку Google Drive | Проверено |
-| Команда `ping` и ответ моста | Проверено |
-| Создание тестового чайника по удалённой команде | Проверено визуально в Max |
-| Автоматическая оценка качества геометрии | **Не реализована** |
-| Гарантированное получение снимка viewport после любой команды | **Не гарантируется** |
-| Полная надёжность при перезапусках, конфликтах синхронизации и сбоях | **Не подтверждена** |
+The output is ordinary **native, editable Autodesk 3ds Max geometry**.
 
-**Важно:** успешное выполнение скрипта не означает, что модель получилась правильной. Для проверки нужны и данные сцены, и изображение viewport, и профессиональная оценка геометрии.
+## Research question
 
-## Что находится в репозитории
+The experiment began as a practical test:
 
-| Файл / каталог | Назначение |
-|---|---|
-| [`TASY_MaxBridge_061_PORTABLE.py`](TASY_MaxBridge_061_PORTABLE.py) | Исполняемый мост для 3ds Max 2024 |
-| [`docs/INSTALL_RU.md`](docs/INSTALL_RU.md) | Установка, подключение, команды и диагностика |
-| [`docs/MAXBRIDGE_SPLINE_MODELING_RU.md`](docs/MAXBRIDGE_SPLINE_MODELING_RU.md) | Метод построения геометрии сплайнами |
-| [`docs/MAXBRIDGE_SNAPSHOT_MODELING_RU.md`](docs/MAXBRIDGE_SNAPSHOT_MODELING_RU.md) | Path Constraint, Auto Key, Snapshot |
-| [`examples/stools/`](examples/stools/) | Простые предметы, размеры и конструктивные элементы |
-| [`examples/pergola/`](examples/pergola/) | Исходная команда `000035`: 73 изменяющихся сплайн-профиля |
-| [`examples/margarita/`](examples/margarita/) | Экспериментальная сцена и скрипты воспроизведения |
-| [`LICENSE`](LICENSE), [`NOTICE`](NOTICE) | Условия распространения |
+> **Can a general-purpose language model work directly as a modeler inside a professional 3D environment?**
 
-## Установка и первый тест
+It was not a test of whether an LLM can write a 3ds Max script for a human to copy and run. The goal was to close the loop: task → modeling operation → actual scene → viewport → evaluation → next modeling operation.
 
-1. Скачайте [архив версии](../../releases) или файл [`TASY_MaxBridge_061_PORTABLE.py`](TASY_MaxBridge_061_PORTABLE.py).
-2. Поместите скрипт в **отдельную локальную папку с правами записи**. Не запускайте его поверх другого рабочего экземпляра моста.
-3. В Autodesk 3ds Max 2024 выберите **Scripting → Run Script**.
-4. Проверьте в Python Listener сообщение `TASY MaxBridge 0.6.1 PORTABLE running` и путь `ROOT:`.
-5. В папке скрипта создайте `command.json`:
+## What was demonstrated
 
-```json
-{"id":"test-ping-001","action":"ping"}
-```
+### 01 — Control object: stool
 
-6. Проверьте `result.json`: идентификатор ответа должен совпадать с отправленным. Для следующей команды используйте **новый ID**.
+A simple stool was used as a controlled modeling task. The process included professional correction of the modeling method, creation of native geometry, and export of the construction logic as an autonomous Python/pymxs scene program.
 
-После успешного `ping` можно проверить создание геометрии:
+![Stool reproduced in 3ds Max](media/GPT_Stool_clean_max.png)
 
-```json
-{"id":"test-teapot-002","action":"execute_python","code":"o=rt.Teapot(radius=250); o.name='Bridge_Test_Teapot'; rt.select(o); rt.execute('max tool zoomextents all')"}
-```
+[Stool source scripts](examples/stools/)
 
-Подробная инструкция, структура файлов, подключение синхронизации и устранение ошибок: **[INSTALL_RU.md](docs/INSTALL_RU.md)**.
+### 02 — Transfer of a professional modeling method
 
-## Эксперименты по моделированию
+The architect then explained a reusable professional technique rather than supplying an object to copy: one source profile/object, a rule of spatial or parametric change, repeated sampled states, and cleanup into usable native geometry.
 
-### Табуретки
+ChatGPT applied the learned logic to a new task: a large slatted urban-furniture / shade-seat module.
 
-Простейшие объекты позволяют проверять, понимает ли модель габариты, положение деталей, сплайновые опоры, повороты и повторение элементов. [Исходные скрипты](examples/stools/).
+![Independent MAF result](media/MAF_000035_single.png)
 
-### Пергола / команда 000035
+The result was then duplicated, rotated and placed in a larger spatial composition in 3ds Max.
 
-Процедурная конструкция из **73 параметрически изменяющихся профилей**. Исходная команда и извлечённый Python сохранены отдельно. Это математическое построение профилей, **не** метод Snapshot. [Код и описание](examples/pergola/).
+![MAF pair](media/MAF_000035_pair.png)
 
-**Предупреждение:** оригинальная команда содержит `resetMaxFile(noPrompt)` и **сбрасывает текущую сцену без запроса на сохранение**. Перед запуском сохраните работу.
+![MAF grounded composition](media/MAF_000035_grounded.png)
 
-### «Маргарита»
+The intermediate failures are part of the experiment: professional feedback changed the **modeling method**, not merely a list of coordinates.
 
-Эксперимент со сплайновыми профилями, пространственными сечениями и итеративной корректировкой сцены. В каталоге представлены скрипты воспроизведения. Визуализация сада создана генеративной моделью **на основе реального viewport**, а не штатным рендером 3ds Max. Отдельный автономный скрипт демонстрирует переносимость геометрии, но сам по себе не доказывает работу обратной связи моста. [Код и описание](examples/margarita/).
+[Original MAF command 000035 and Python source](examples/pergola/) · [Spline modeling method](docs/MAXBRIDGE_SPLINE_MODELING_RU.md) · [Snapshot method](docs/MAXBRIDGE_SNAPSHOT_MODELING_RU.md)
 
-Иллюстрации доступны во вложениях [релиза](../../releases), а также в архиве комплекта. Они показывают результаты экспериментов, но не подменяют исполняемые исходники.
+**Technical distinction:** Command `000035` generates 73 changing spline profiles procedurally. The separately documented Path Constraint → Auto Key → Snapshot workflow is a different technique. **Command `000035` resets the active 3ds Max scene without a save prompt.**
 
-## Границы проекта и безопасность
+### 03 — Executable scene representation
 
-- Мост **не является самостоятельным 3D-моделлером**. Он исполняет команды и возвращает наблюдаемое состояние.
-- Навыки моделирования, знание 3ds Max и контроль конструктивной логики нужно передавать модели через инструкции, примеры и обратную связь.
-- `execute_python` исполняет **произвольный Python-код с правами процесса 3ds Max**. Принимайте команды только из доверенного источника и не открывайте посторонним запись в рабочую папку.
-- Перед экспериментами с чужими скриптами сохраняйте сцену. Отдельные примеры могут очищать её или изменять существующие объекты.
-- Для достоверного отчёта сопоставляйте `command.json`, `result.json`, `scene.json` и, если доступен, `viewport.png`.
+The stool experiment produced a second research question: does the scene itself have to be transmitted as a traditional scene file?
 
-## Авторство и лицензия
+The modeled object was represented as an autonomous Python/pymxs program. A separate clean instance of 3ds Max, without the bridge and without the source scene, reconstructed the editable object from that program.
 
-**Tasy Volkova**, 2026. Архитектурная постановка задач, методика обучения моделированию и экспериментальная работа с ChatGPT и Autodesk 3ds Max.
+> **An ordinary scene stores a state of the world. An executable scene can store the rules by which that state is produced.**
 
-Исходный код распространяется по **Apache License 2.0**. См. [LICENSE](LICENSE), [NOTICE](NOTICE) и [CITATION.cff](CITATION.cff).
+Or, more simply:
 
-Проект: [tasy.pro](https://tasy.pro/) · [TasyTools](https://github.com/tvolkf-star/TasyTools)
+> **The scene itself can be transmitted as a program.**
+
+[Executable stool scripts](examples/stools/) · [Margarita scene reconstruction scripts](examples/margarita/)
+
+## Read the research
+
+- [Full research draft — Russian](RESEARCH_RU.md)
+- [Setup and reproduction](docs/SETUP.md)
+- [Professional modeling-method transfer](docs/MODELING_METHOD.md)
+- [Transport/file protocol](protocol/FILES.md)
+- [Detailed Russian installation guide for 0.6.1 PORTABLE](docs/INSTALL_RU.md)
+
+## Repository contents
+
+- [`TASY_MaxBridge_061_PORTABLE.py`](TASY_MaxBridge_061_PORTABLE.py) — working portable Python/pymxs bridge for Autodesk 3ds Max 2024.
+- `bridge/` — compact bridge research sources and related files.
+- `examples/01_stool/` — original stool construction research.
+- `examples/02_method_transfer_maf/` — original modeling-method transfer experiment.
+- [`examples/stools/`](examples/stools/) — packaged stool scripts.
+- [`examples/pergola/`](examples/pergola/) — original command `000035` and executable Python.
+- [`examples/margarita/`](examples/margarita/) — reconstructible sculptural scene scripts.
+- `media/` — original viewport evidence from the experiment.
+- `docs/` — setup, installation and modeling-method documentation.
+- `protocol/` — transport contract and command examples.
+
+## Status
+
+This repository documents an ongoing practical experiment. It makes no claim that this is the first LLM-to-3ds-Max integration. The focus is the demonstrated combination of a general-purpose ChatGPT model, a deliberately minimal transport bridge, a third-party synchronized storage layer, native editable 3ds Max geometry, visual/state feedback, professional method transfer, and executable scene representation.
+
+**Verification note:** a successful script execution does not by itself establish the geometric quality of the result. Viewport captures are best-effort and not guaranteed for every command.
+
+**Security:** `execute_python` runs arbitrary Python inside 3ds Max with the process's permissions. Only use trusted commands; save existing scenes before experiments.
+
+**Author:** Tasy Volkova · **License:** [Apache-2.0](LICENSE) · [NOTICE](NOTICE) · [CITATION.cff](CITATION.cff) · [tasy.pro](https://tasy.pro/)
