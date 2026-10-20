@@ -4,6 +4,30 @@
 
 [Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русская версия](README_RU.md)
 
+## 35 floors. Built directly in 3ds Max.
+
+This is not a generated 3D asset. The building below is **native, editable geometry constructed directly inside a running Autodesk 3ds Max scene through TASY MaxBridge.**
+
+35 floors. 7 m public ground floor. 1.5 m technical floor. 3.5 m typical floors. 240 mm slabs. 2000 × 800 mm structural supports on a 12 m grid. A 15° break in plan. A cantilevered low-rise wing over the water. A facade study built from physical dimensions.
+
+![35-storey tower as native editable geometry in Autodesk 3ds Max](tasy_maxbridge_tower_max.jpg)
+
+*Actual Autodesk 3ds Max viewport. The scene is ordinary editable 3ds Max geometry.*
+
+![Architectural visualization based on the 3ds Max tower geometry](tasy_maxbridge_tower_archviz.jpg)
+
+*Architectural visualization based on the viewport geometry. Presentation image, not the model itself.*
+
+**The visualization is not the result. The editable 3ds Max scene is.**
+
+The model was developed through a simple working loop:
+
+**natural language → modeling operations → native geometry → viewport feedback → correction**
+
+No text-to-3D generator. No specialized 3D model. No autonomous agent stack. The bridge only connects the LLM to the professional tool and returns what happened.
+
+During this test, the building geometry and facade study were created through the bridge. The only manual scene operation was setting the final camera and view.
+
 ## Download
 
 **[⬇ DOWNLOAD ALL — TASY MaxBridge 0.6.1 PORTABLE](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip)**
