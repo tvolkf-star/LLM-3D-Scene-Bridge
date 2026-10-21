@@ -4,7 +4,7 @@
 
 [Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русская версия](README_RU.md)
 
-## 35 floors. Built directly in 3ds Max.
+## 35 floors. LLM Built directly in 3ds Max.
 
 This is not a generated 3D asset. The building below is **native, editable geometry constructed directly inside a running Autodesk 3ds Max scene through TASY MaxBridge.**
 
