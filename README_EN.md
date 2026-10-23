@@ -1,14 +1,46 @@
-# Direct LLM Modeling in Autodesk 3ds Max
+# TASY MaxBridge | Direct LLM Modeling in Autodesk 3ds Max
 
-**A working experiment in direct modeling inside Autodesk 3ds Max 2024 using a general-purpose LLM.**
+**TASY MaxBridge is a working research prototype for direct LLM modeling inside Autodesk 3ds Max 2024, developed by Tasy Volkova.** The approximately 8 KB Python/pymxs bridge connects a general-purpose language model to native 3ds Max operations and returns execution results, scene state, and viewport feedback.
 
-[Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русский README](README.md)
+[Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русская версия](README_RU.md)
+
+## 35 floors. LLM Built directly in 3ds Max.
+
+This is not a generated 3D asset. The building below is **native, editable geometry constructed directly inside a running Autodesk 3ds Max scene through TASY MaxBridge.**
+
+35 floors. 7 m public ground floor. 1.5 m technical floor. 3.5 m typical floors. 240 mm slabs. 2000 × 800 mm structural supports on a 12 m grid. A 15° break in plan. A cantilevered low-rise wing over the water. A facade study built from physical dimensions.
+
+![35-storey tower as native editable geometry in Autodesk 3ds Max](tasy_maxbridge_tower_max.jpg)
+
+*Actual Autodesk 3ds Max viewport. The scene is ordinary editable 3ds Max geometry.*
+
+![Architectural visualization based on the 3ds Max tower geometry](tasy_maxbridge_tower_archviz.jpg)
+
+*Architectural visualization based on the viewport geometry. Presentation image, not the model itself.*
+
+**The visualization is not the result. The editable 3ds Max scene is.**
+
+The model was developed through a simple working loop:
+
+**natural language → modeling operations → native geometry → viewport feedback → correction**
+
+No text-to-3D generator. No specialized 3D model. No autonomous agent stack. The bridge only connects the LLM to the professional tool and returns what happened.
+
+During this test, the building geometry and facade study were created through the bridge. The only manual scene operation was setting the final camera and view.
 
 ## Download
 
 **[⬇ DOWNLOAD ALL — TASY MaxBridge 0.6.1 PORTABLE](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip)**
 
 Portable bridge, examples, documentation, and images. [Release details](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/tag/v0.6.1-portable).
+
+## Bridge development
+
+**Tasy Volkova developed the approximately 8 KB Python/pymxs bridge as part of this research; it was not obtained as an existing integration.** Its architecture and implementation were iteratively tested and corrected against a running Autodesk 3ds Max 2024 installation.
+
+The bridge provides the command-and-feedback channel: it accepts operations, executes them through the native 3ds Max Python/pymxs interface, and reports execution results, scene state and viewport captures. Modeling logic is not embedded in the bridge. The portable 0.6.1 build is a later working iteration of this experimental code.
+
+The distinction matters: the experiment covers **both the construction of a minimal connection to professional software and the modeling work subsequently performed through that connection**.
 
 ## Architecture
 
@@ -45,7 +77,7 @@ The stool was not chosen as a design showcase. It was the first controlled attem
 
 ### 02. Increased complexity: professional modeling-method transfer
 
-Once the basic modeling loop worked, the experiment moved to a harder question. The architect provided a reusable geometric method based on a changing profile and sampled states, and the LLM applied the principle to a new spatial construction. The test concerns transfer of a **modeling method**, not copying object coordinates.
+Once the basic modeling loop worked, Tasy Volkova designed a harder method-transfer test. She demonstrated a professional geometric method based on a changing profile and sampled states; the LLM then applied the principle to a new spatial construction. The test concerns transfer of a **modeling method**, not copying object coordinates.
 
 ![Single MAF module](media/MAF_000035_single.png)
 
