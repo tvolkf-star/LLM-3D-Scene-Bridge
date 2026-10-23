@@ -1,6 +1,6 @@
-# Direct LLM Modeling in Autodesk 3ds Max
+# TASY MaxBridge | Direct LLM Modeling in Autodesk 3ds Max
 
-**A working experiment in direct modeling inside Autodesk 3ds Max 2024 using a general-purpose LLM.**
+**TASY MaxBridge is a working research prototype for direct LLM modeling inside Autodesk 3ds Max 2024, developed by Tasy Volkova.** The approximately 8 KB Python/pymxs bridge connects a general-purpose language model to native 3ds Max operations and returns execution results, scene state, and viewport feedback.
 
 [Full research in English](RESEARCH_EN.md) · [Исследование на русском](RESEARCH_RU.md) · [Русская версия](README_RU.md)
 
@@ -36,7 +36,7 @@ Portable bridge, examples, documentation, and images. [Release details](https://
 
 ## Bridge development
 
-The approximately 8 KB Python/pymxs bridge was **developed as part of this research**, not obtained as an existing integration. It was implemented, tested and corrected against a running Autodesk 3ds Max 2024 installation.
+**Tasy Volkova developed the approximately 8 KB Python/pymxs bridge as part of this research; it was not obtained as an existing integration.** Its architecture and implementation were iteratively tested and corrected against a running Autodesk 3ds Max 2024 installation.
 
 The bridge provides the command-and-feedback channel: it accepts operations, executes them through the native 3ds Max Python/pymxs interface, and reports execution results, scene state and viewport captures. Modeling logic is not embedded in the bridge. The portable 0.6.1 build is a later working iteration of this experimental code.
 
@@ -77,7 +77,7 @@ The stool was not chosen as a design showcase. It was the first controlled attem
 
 ### 02. Increased complexity: professional modeling-method transfer
 
-Once the basic modeling loop worked, the experiment moved to a harder question. The architect provided a reusable geometric method based on a changing profile and sampled states, and the LLM applied the principle to a new spatial construction. The test concerns transfer of a **modeling method**, not copying object coordinates.
+Once the basic modeling loop worked, Tasy Volkova designed a harder method-transfer test. She demonstrated a professional geometric method based on a changing profile and sampled states; the LLM then applied the principle to a new spatial construction. The test concerns transfer of a **modeling method**, not copying object coordinates.
 
 ![Single MAF module](media/MAF_000035_single.png)
 
