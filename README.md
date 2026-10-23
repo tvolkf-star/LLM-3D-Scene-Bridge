@@ -138,10 +138,10 @@ The result is an **ultra-compact, LLM-readable way to transfer, reconstruct, and
 
 ## Installation
 
-1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a writable local folder.
-2. Open **Autodesk 3ds Max 2024 → Scripting → Run Script** and run `TASY_MaxBridge_061_PORTABLE.py`.
-3. Synchronize the working folder using Google Drive for desktop and verify two-way file synchronization.
-4. Give a capable large language model access to the corresponding Google Drive folder and project documentation.
+1. [Download the complete ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) and extract it to a **writable local folder on the user's computer**. MaxBridge runs from the local file system.
+2. Configure Google Drive for desktop so that **this local MaxBridge working folder is synchronized with Google Drive**. Google Drive is only the transport layer for exchanged files; the MaxBridge script does not run from the cloud and Google Drive itself cannot control 3ds Max.
+3. Give the language model access to the corresponding synchronized Google Drive folder and verify two-way file exchange.
+4. Open **Autodesk 3ds Max 2024 → Scripting → Run Script** and run `TASY_MaxBridge_061_PORTABLE.py` **from the local MaxBridge folder on the computer**.
 5. Give the model the MaxBridge documentation and working examples. The bridge is ready for the modeling task; `ping` is a diagnostic action, not a required startup step.
 
 [Detailed installation guide (Russian)](docs/INSTALL_RU.md) · [File protocol](protocol/FILES.md).
