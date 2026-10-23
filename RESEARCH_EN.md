@@ -28,7 +28,7 @@ A second question emerged during the work: **can the resulting scene exist not o
 
 ## 2. Experimental system
 
-As part of the research, a minimal bidirectional software bridge was developed between the ChatGPT interface and a locally running Autodesk 3ds Max 2024.
+As part of the research, **Tasy Volkova developed a minimal bidirectional software bridge** between the ChatGPT interface and a locally running Autodesk 3ds Max 2024.
 
 Data transfer was organized through a synchronized Google Drive directory:
 
@@ -66,7 +66,7 @@ The first controlled object-modeling test used an IKEA FROSTA stool as a constru
 
 *Native editable geometry in Autodesk 3ds Max.*
 
-During modeling, an independent variant of the bent support geometry emerged. The architect evaluated the result and deliberately retained it as a separate design variant named **GPT Stool No. 1**.
+During modeling, an independent variant of the bent support geometry emerged. Tasy Volkova evaluated the result and deliberately retained it as a separate design variant named **GPT Stool No. 1**.
 
 The significant result was not only the object but the change in working method. After professional correction, the LLM moved from direct polygon construction to a method more appropriate to the task:
 
@@ -82,9 +82,9 @@ In other words, the finished model was not manually repaired. What was corrected
 
 The next stage tested a more demanding hypothesis: can a language model adopt not the coordinates of a particular object, but the principle of a professional modeling method and apply it to a new geometric task?
 
-The architect demonstrated a working principle used for repeated spatial systems: a source profile or object moves along a path while its parameters change, and a sequence of states is materialized as geometry. In 3ds Max, such a workflow can be implemented, among other ways, with Path Constraint, Animation, and Snapshot.
+Tasy Volkova demonstrated a professional working principle used for repeated spatial systems: a source profile or object moves along a path while its parameters change, and a sequence of states is materialized as geometry. In 3ds Max, such a workflow can be implemented, among other ways, with Path Constraint, Animation, and Snapshot.
 
-The examples explained the **principle** rather than supplying geometry to copy.
+Her examples explained the **principle** rather than supplying geometry to copy.
 
 The LLM then received a new task: an elongated small architectural form with an integrated seat and canopy. The model did not literally reproduce the demonstrated Path Constraint + Animation + Snapshot sequence. Instead, it transferred the principle of a changing profile and sampled states into a procedural construction of the new form.
 
@@ -102,7 +102,7 @@ The LLM then received a new task: an elongated small architectural form with an 
 
 The first iterations revealed errors in form and ergonomics. Professional feedback addressed the profile, transitions, lamella section, and construction method. After the method was corrected, subsequent iterations produced a substantially different result.
 
-This stage supports a narrower and more testable conclusion than “teaching a model to model in general”: **a professional construction principle was explained by a human, interpreted by the LLM, and applied to a new task through a different procedural implementation.**
+This stage supports a narrower and more testable conclusion than “teaching a model to model in general”: **Tasy Volkova transferred a professional construction principle through explanation and examples; the LLM interpreted that principle and applied it to a new task through a different procedural implementation.**
 
 [Source example](examples/02_method_transfer_maf/MAF_RibbonSeat_000035.py) · [Modeling method](docs/MODELING_METHOD.md)
 
@@ -208,7 +208,7 @@ In the implemented system, the LLM is not limited to supplying code for manual t
 
 At the same time, **3ds Max remains 3ds Max**. No intermediate “AI geometry” is created that later requires conversion. The result consists of standard editable objects in a professional DCC system.
 
-The experiment also demonstrated transfer of a professional modeling principle. The human explained a method for solving a class of tasks rather than supplying finished geometry to copy. The LLM interpreted that principle and applied it to a new form, without necessarily using the same literal sequence of commands.
+The experiment also demonstrated transfer of a professional modeling principle. Tasy Volkova explained a professional method for solving a class of tasks rather than supplying finished geometry to copy. The LLM interpreted that principle and applied it to a new form, without necessarily using the same literal sequence of commands.
 
 The progression from a simple object to MARGARITA and then to a composition of multiple objects showed that the same loop can be applied to increasingly complex tasks. It also exposed an important boundary: **the human more reliably maintains project context and evaluation criteria; the LLM is effective as a modeler solving the next local task within that context.**
 
