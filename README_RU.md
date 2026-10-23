@@ -116,10 +116,10 @@
 
 ## Установка: 5 шагов
 
-1. [Скачайте ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) и распакуйте его в локальную папку с правами записи.
-2. Откройте **Autodesk 3ds Max 2024 → Scripting → Run Script** и запустите `TASY_MaxBridge_061_PORTABLE.py`.
-3. Синхронизируйте рабочую папку с Google Drive для компьютера; проверьте двусторонний обмен.
-4. Предоставьте подходящей языковой модели доступ к соответствующей папке Google Drive и документации проекта.
+1. [Скачайте ZIP](https://github.com/tvolkf-star/LLM-3D-Scene-Bridge/releases/download/v0.6.1-portable/TASY_MaxBridge_v0.6.1_PORTABLE_COMPLETE.zip) и распакуйте его в **обычную локальную папку на компьютере пользователя** с правами записи. MaxBridge запускается и работает именно из локальной файловой системы.
+2. Настройте Google Drive для компьютера так, чтобы **эта локальная рабочая папка MaxBridge синхронизировалась с Google Drive**. Google Drive здесь служит только транспортом обменных файлов; скрипт MaxBridge не запускается из облака и Google Drive сам по себе не предоставляет ему управление 3ds Max.
+3. Предоставьте языковой модели доступ к соответствующей синхронизированной папке Google Drive и проверьте двусторонний обмен файлами.
+4. Откройте **Autodesk 3ds Max 2024 → Scripting → Run Script** и запустите `TASY_MaxBridge_061_PORTABLE.py` **из локальной папки MaxBridge на компьютере**.
 5. Передайте модели документацию MaxBridge и рабочие примеры. После этого можно переходить к задаче; `ping` нужен для диагностики, а не как обязательный этап запуска.
 
 [Подробная инструкция на русском](docs/INSTALL_RU.md) · [Краткая инструкция на английском](README_EN.md#installation) · [Файловый протокол](protocol/FILES.md).
